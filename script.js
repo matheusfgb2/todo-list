@@ -29,6 +29,14 @@ header.appendChild(buttonCriarTarefa);
 // (Requisito 4)
 header.appendChild(olListaTarefas);
 //
+const removePreviousGrayBg = () => {
+  const grayBg = document.querySelector('.gray-bg');
+  if (grayBg !== null) {
+    console.log(grayBg.classList);
+    grayBg.classList.remove('gray-bg');
+    console.log(grayBg.classList);
+  }
+}
 buttonCriarTarefa.addEventListener('click', () => {
   const li = document.createElement('li');
   li.className = 'task-item';
@@ -36,10 +44,13 @@ buttonCriarTarefa.addEventListener('click', () => {
   olListaTarefas.appendChild(li);
   inputTextoTarefa.value = '';
   // Requisito 7 - Clicar em um item da lista deve alterar a cor de fundo do item para cinza
-  const listItem = document.getElementsByClassName('task-item');
-  for (let index = 0; index < listItem.length; index += 1) {
-    listItem[index].addEventListener('click', (event) => {
-      event.target.style.backgroundColor = 'gray';
+  const listItems = document.getElementsByClassName('task-item');
+  for (let index = 0; index < listItems.length; index += 1) {
+    listItems[index].addEventListener('click', (event) => {
+      const listItem = event.target
+      // Requisito 8 - Não deve ser possível selecionar mais de um elemento da lista ao mesmo tempo
+      removePreviousGrayBg();
+      listItem.classList.add('gray-bg');
     });
   }
 });
