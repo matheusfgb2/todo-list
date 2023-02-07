@@ -69,6 +69,5 @@ buttonCriarTarefa.addEventListener('click', () => {
   olListaTarefas.appendChild(li);
   inputTextoTarefa.value = '';
   addGrayBg();
+  crossTask();
 });
-
-crossTask();
