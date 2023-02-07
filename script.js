@@ -20,6 +20,18 @@ header.appendChild(inputTextoTarefa);
 // Requisito 4 - Adicione uma lista ordenada de tarefas com o id="lista-tarefas"
 const olListaTarefas = document.createElement('ol');
 olListaTarefas.id = 'lista-tarefas';
-header.appendChild(olListaTarefas);
 
 // Requisito 5 - Adicione um botão com id="criar-tarefa" e, ao clicar nesse botão, um novo item deverá ser criado ao final da lista e o texto do input deve ser limpo
+const buttonCriarTarefa = document.createElement('button');
+buttonCriarTarefa.id = 'criar-tarefa';
+buttonCriarTarefa.innerHTML = 'Adicionar';
+header.appendChild(buttonCriarTarefa);
+// (Requisito 4)
+header.appendChild(olListaTarefas);
+//
+buttonCriarTarefa.addEventListener('click', () => {
+  const li = document.createElement('li');
+  li.innerHTML = inputTextoTarefa.value;
+  olListaTarefas.appendChild(li);
+  inputTextoTarefa.value = '';
+});
