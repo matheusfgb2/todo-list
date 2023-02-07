@@ -21,36 +21,54 @@ header.appendChild(inputTextoTarefa);
 const olListaTarefas = document.createElement('ol');
 olListaTarefas.id = 'lista-tarefas';
 
-// Requisito 5 e 6 - Adicione um botão com id="criar-tarefa" e, ao clicar nesse botão, um novo item deverá ser criado ao final da lista e o texto do input deve ser limpo | Adicione três novas tarefas e ordene todas as tarefas da lista por ordem de criação
+// Requisito 5 - Adicione um botão com id="criar-tarefa"
 const buttonCriarTarefa = document.createElement('button');
 buttonCriarTarefa.id = 'criar-tarefa';
 buttonCriarTarefa.innerHTML = 'Adicionar';
 header.appendChild(buttonCriarTarefa);
 // (Requisito 4)
 header.appendChild(olListaTarefas);
-//
+// (Requisito 8)
 const removePreviousGrayBg = () => {
-  const grayBg = document.querySelector('.gray-bg');
+  const grayBg = document.querySelector('#gray-bg');
   if (grayBg !== null) {
-    console.log(grayBg.classList);
-    grayBg.classList.remove('gray-bg');
-    console.log(grayBg.classList);
+    grayBg.removeAttribute('id', 'gray-bg');
   }
-}
+};
+const listItems = document.getElementsByClassName('task-item');
+const addGrayBg = () => {
+  // Requisito 7 - Clicar em um item da lista deve alterar a cor de fundo do item para cinza
+  for (let index = 0; index < listItems.length; index += 1) {
+    listItems[index].addEventListener('click', (event) => {
+      const listItem = event.target;
+      // Requisito 8 - Não deve ser possível selecionar mais de um elemento da lista ao mesmo tempo
+      removePreviousGrayBg();
+      listItem.id = 'gray-bg';
+    });
+  }
+};
+// Requisito 9 - Clicar duas vezes em um item, faz com que ele seja riscado, indicando que foi completado. Deve ser possível desfazer essa ação clicando novamente duas vezes no item
+const crossTask = () => {
+  for (let index = 0; index < listItems.length; index += 1) {
+    listItems[index].addEventListener('click', (event) => {
+      const classItensList = event.target.classList;
+      console.log(classItensList.contains('completed'));
+      if (classItensList.contains('completed')) {
+        event.target.classList.remove('completed');
+      } else {
+        event.target.classList.add('completed');
+      }
+    });
+  }
+};
+// Requisito 5 - ao clicar nesse botão, um novo item deverá ser criado ao final da lista e o texto do input deve ser limpo
 buttonCriarTarefa.addEventListener('click', () => {
   const li = document.createElement('li');
   li.className = 'task-item';
   li.innerHTML = inputTextoTarefa.value;
   olListaTarefas.appendChild(li);
   inputTextoTarefa.value = '';
-  // Requisito 7 - Clicar em um item da lista deve alterar a cor de fundo do item para cinza
-  const listItems = document.getElementsByClassName('task-item');
-  for (let index = 0; index < listItems.length; index += 1) {
-    listItems[index].addEventListener('click', (event) => {
-      const listItem = event.target
-      // Requisito 8 - Não deve ser possível selecionar mais de um elemento da lista ao mesmo tempo
-      removePreviousGrayBg();
-      listItem.classList.add('gray-bg');
-    });
-  }
+  addGrayBg();
 });
+
+crossTask();
