@@ -21,7 +21,7 @@ header.appendChild(inputTextoTarefa);
 const olListaTarefas = document.createElement('ol');
 olListaTarefas.id = 'lista-tarefas';
 
-// Requisito 5 - Adicione um botão com id="criar-tarefa" e, ao clicar nesse botão, um novo item deverá ser criado ao final da lista e o texto do input deve ser limpo
+// Requisito 5 e 6 - Adicione um botão com id="criar-tarefa" e, ao clicar nesse botão, um novo item deverá ser criado ao final da lista e o texto do input deve ser limpo | Adicione três novas tarefas e ordene todas as tarefas da lista por ordem de criação
 const buttonCriarTarefa = document.createElement('button');
 buttonCriarTarefa.id = 'criar-tarefa';
 buttonCriarTarefa.innerHTML = 'Adicionar';
@@ -31,7 +31,15 @@ header.appendChild(olListaTarefas);
 //
 buttonCriarTarefa.addEventListener('click', () => {
   const li = document.createElement('li');
+  li.className = 'task-item';
   li.innerHTML = inputTextoTarefa.value;
   olListaTarefas.appendChild(li);
   inputTextoTarefa.value = '';
+  // Requisito 7 - Clicar em um item da lista deve alterar a cor de fundo do item para cinza
+  const listItem = document.getElementsByClassName('task-item');
+  for (let index = 0; index < listItem.length; index += 1) {
+    listItem[index].addEventListener('click', (event) => {
+      event.target.style.backgroundColor = 'gray';
+    });
+  }
 });
