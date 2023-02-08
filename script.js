@@ -6,15 +6,19 @@ const taskOlList = document.getElementById('lista-tarefas');
 const deleteButton = document.getElementById('apaga-tudo');
 const concludedDeleteButton = document.getElementById('remover-finalizados');
 const localStorageButton = document.getElementById('salvar-tarefas');
+const upButton = document.getElementById('mover-cima');
+const downButton = document.getElementById('mover-baixo');
 
 const getAllClasses = (objectItem) => {
   let classes = '';
   const classesLength = Object.keys(objectItem.classesFromItem).length;
   for (let index = 0; index < classesLength; index += 1) {
-    if (objectItem.classesFromItem[index + 1] === undefined) {
-      classes += `${objectItem.classesFromItem[index]}`;
-    } else {
-      classes += `${objectItem.classesFromItem[index]} `;
+    if (objectItem.classesFromItem[index] !== 'selected') {
+      if (objectItem.classesFromItem[index + 1] === undefined) {
+        classes += `${objectItem.classesFromItem[index]}`;
+      } else {
+        classes += `${objectItem.classesFromItem[index]} `;
+      }
     }
   }
   return classes;
@@ -55,11 +59,11 @@ taskButton.addEventListener('click', () => {
 taskOlList.addEventListener('click', (event) => {
   const wholeList = event.target;
   if (wholeList.classList.contains(listItem)) {
-    const greyBg = document.querySelector('.gray-bg');
+    const greyBg = document.querySelector('.selected');
     if (greyBg !== null) {
-      greyBg.classList.remove('gray-bg');
+      greyBg.classList.remove('selected');
     }
-    wholeList.classList.add('gray-bg');
+    wholeList.classList.add('selected');
   }
 });
 
@@ -94,4 +98,42 @@ localStorageButton.addEventListener('click', () => {
     stockList[index] = { itemText, classesFromItem };
   }
   localStorage.setItem('savedItens', JSON.stringify(stockList));
+});
+
+upButton.addEventListener('click', () => {
+  const selected = document.querySelector('.selected');
+  if (selected !== null) {
+    const beforeSelected = selected.previousElementSibling;
+    if (beforeSelected !== null) {
+      const textFromSelected = selected.innerHTML;
+      const classesFromSelected = selected.className;
+      const stockSelected = [textFromSelected, classesFromSelected];
+      const oldTextFromSelected = stockSelected[0];
+      const oldClassesFromSelected = stockSelected[1];
+      selected.innerHTML = beforeSelected.innerHTML;
+      selected.className = beforeSelected.className;
+
+      beforeSelected.innerHTML = oldTextFromSelected;
+      beforeSelected.className = oldClassesFromSelected;
+    }
+  }
+});
+
+downButton.addEventListener('click', () => {
+  const selected = document.querySelector('.selected');
+  if (selected !== null) {
+    const afterSelected = selected.nextElementSibling;
+    if (afterSelected !== null) {
+      const textFromSelected = selected.innerHTML;
+      const classesFromSelected = selected.className;
+      const stockSelected = [textFromSelected, classesFromSelected];
+      const oldTextFromSelected = stockSelected[0];
+      const oldClassesFromSelected = stockSelected[1];
+      selected.innerHTML = afterSelected.innerHTML;
+      selected.className = afterSelected.className;
+
+      afterSelected.innerHTML = oldTextFromSelected;
+      afterSelected.className = oldClassesFromSelected;
+    }
+  }
 });
