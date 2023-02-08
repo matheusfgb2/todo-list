@@ -1,8 +1,11 @@
 const inputTaskText = document.getElementById('texto-tarefa');
-const buttonTask = document.getElementById('criar-tarefa');
+const taskButton = document.getElementById('criar-tarefa');
+const taskListItens = document.getElementsByClassName('task-list-item');
 const taskOlList = document.getElementById('lista-tarefas');
+const deleteButton = document.getElementById('apaga-tudo');
+const concludedDeleteButton = document.getElementById('remover-finalizados');
 
-buttonTask.addEventListener('click', () => {
+taskButton.addEventListener('click', () => {
   const li = document.createElement('li');
   li.className = 'task-list-item';
   li.innerHTML = inputTaskText.value;
@@ -29,5 +32,18 @@ taskOlList.addEventListener('dblclick', (event) => {
     } else {
       wholeList.classList.add('completed');
     }
+  }
+});
+
+deleteButton.addEventListener('click', () => {
+  for (let index = taskListItens.length - 1; index >= 0; index -= 1) {
+    taskOlList.removeChild(taskListItens[index]);
+  }
+});
+
+concludedDeleteButton.addEventListener('click', () => {
+  const completed = document.getElementsByClassName('completed');
+  for (let index = completed.length - 1; index >= 0; index -= 1) {
+    completed[index].remove();
   }
 });
