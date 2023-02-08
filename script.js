@@ -8,6 +8,7 @@ const concludedDeleteButton = document.getElementById('remover-finalizados');
 const localStorageButton = document.getElementById('salvar-tarefas');
 const upButton = document.getElementById('mover-cima');
 const downButton = document.getElementById('mover-baixo');
+const removeButton = document.getElementById('remover-selecionado');
 
 const getAllClasses = (objectItem) => {
   let classes = '';
@@ -81,6 +82,7 @@ taskOlList.addEventListener('dblclick', (event) => {
 deleteButton.addEventListener('click', () => {
   for (let index = taskListItens.length - 1; index >= 0; index -= 1) {
     taskOlList.removeChild(taskListItens[index]);
+    localStorage.removeItem('savedItens');
   }
 });
 
@@ -135,5 +137,12 @@ downButton.addEventListener('click', () => {
       afterSelected.innerHTML = oldTextFromSelected;
       afterSelected.className = oldClassesFromSelected;
     }
+  }
+});
+
+removeButton.addEventListener('click', () => {
+  const selected = document.querySelector('.selected');
+  if (selected !== null) {
+    selected.remove();
   }
 });
