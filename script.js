@@ -9,21 +9,7 @@ const localStorageButton = document.getElementById('salvar-tarefas');
 const upButton = document.getElementById('mover-cima');
 const downButton = document.getElementById('mover-baixo');
 const removeButton = document.getElementById('remover-selecionado');
-
-const getAllClasses = (objectItem) => {
-  let classes = '';
-  const classesLength = Object.keys(objectItem.classesFromItem).length;
-  for (let index = 0; index < classesLength; index += 1) {
-    if (objectItem.classesFromItem[index] !== 'selected') {
-      if (objectItem.classesFromItem[index + 1] === undefined) {
-        classes += `${objectItem.classesFromItem[index]}`;
-      } else {
-        classes += `${objectItem.classesFromItem[index]} `;
-      }
-    }
-  }
-  return classes;
-};
+let listArray = [];
 
 const detectLocalStorage = () => {
   if (localStorage.getItem('savedItens') !== null) {
@@ -32,19 +18,19 @@ const detectLocalStorage = () => {
   return false;
 };
 
-const objectAttribute = () => {
+const arrayAttribute = () => {
   if (detectLocalStorage()) {
     return JSON.parse(localStorage.getItem('savedItens'));
   }
-  return {};
+  return [];
 };
 
-const stockList = objectAttribute();
+listArray = arrayAttribute();
 if (detectLocalStorage()) {
-  for (let index = 0; index < Object.keys(stockList).length; index += 1) {
+  for (let index = 0; index < listArray.length; index += 1) {
     const li = document.createElement('li');
-    li.innerHTML = stockList[index].itemText;
-    li.className = getAllClasses(stockList[index]);
+    li.innerHTML = listArray[index].itemText;
+    li.className = listArray[index].classesFromItem;
     taskOlList.appendChild(li);
   }
 }
@@ -82,7 +68,7 @@ taskOlList.addEventListener('dblclick', (event) => {
 deleteButton.addEventListener('click', () => {
   for (let index = taskListItens.length - 1; index >= 0; index -= 1) {
     taskOlList.removeChild(taskListItens[index]);
-    localStorage.removeItem('savedItens');
+    // localStorage.removeItem('savedItens');
   }
 });
 
@@ -94,12 +80,13 @@ concludedDeleteButton.addEventListener('click', () => {
 });
 
 localStorageButton.addEventListener('click', () => {
+  listArray = [];
   for (let index = 0; index < taskListItens.length; index += 1) {
     const itemText = taskListItens[index].innerText;
-    const classesFromItem = taskListItens[index].classList;
-    stockList[index] = { itemText, classesFromItem };
+    const classesFromItem = taskListItens[index].className;
+    listArray.push({ itemText, classesFromItem });
   }
-  localStorage.setItem('savedItens', JSON.stringify(stockList));
+  localStorage.setItem('savedItens', JSON.stringify(listArray));
 });
 
 upButton.addEventListener('click', () => {
