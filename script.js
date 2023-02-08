@@ -20,3 +20,14 @@ taskOlList.addEventListener('click', (event) => {
     wholeList.id = 'gray-bg';
   }
 });
+
+taskOlList.addEventListener('dblclick', (event) => {
+  const wholeList = event.target;
+  if (wholeList.classList.contains('task-list-item')) {
+    if (wholeList.classList.contains('completed')) {
+      wholeList.classList.remove('completed');
+    } else {
+      wholeList.classList.add('completed');
+    }
+  }
+});
