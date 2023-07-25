@@ -9,28 +9,16 @@ const localStorageButton = document.getElementById('salvar-tarefas');
 const upButton = document.getElementById('mover-cima');
 const downButton = document.getElementById('mover-baixo');
 const removeButton = document.getElementById('remover-selecionado');
-let listArray = [];
 
-const detectLocalStorage = () => {
-  if (localStorage.getItem('savedItens') !== null) {
-    return true;
-  }
-  return false;
-};
+let taskList = [];
 
-const arrayAttribute = () => {
-  if (detectLocalStorage()) {
-    return JSON.parse(localStorage.getItem('savedItens'));
-  }
-  return [];
-};
+taskList = JSON.parse(localStorage.getItem('savedItens')) || [];
 
-listArray = arrayAttribute();
-if (detectLocalStorage()) {
-  for (let index = 0; index < listArray.length; index += 1) {
+if (taskList.length > 0) {
+  for (let index = 0; index < taskList.length; index += 1) {
     const li = document.createElement('li');
-    li.innerHTML = listArray[index].itemText;
-    li.className = listArray[index].classesFromItem;
+    li.innerHTML = taskList[index].itemText;
+    li.className = taskList[index].classesFromItem;
     taskOlList.appendChild(li);
   }
 }
@@ -68,7 +56,6 @@ taskOlList.addEventListener('dblclick', (event) => {
 deleteButton.addEventListener('click', () => {
   for (let index = taskListItens.length - 1; index >= 0; index -= 1) {
     taskOlList.removeChild(taskListItens[index]);
-    // localStorage.removeItem('savedItens');
   }
 });
 
@@ -80,13 +67,13 @@ concludedDeleteButton.addEventListener('click', () => {
 });
 
 localStorageButton.addEventListener('click', () => {
-  listArray = [];
+  taskList = [];
   for (let index = 0; index < taskListItens.length; index += 1) {
     const itemText = taskListItens[index].innerText;
     const classesFromItem = taskListItens[index].className;
-    listArray.push({ itemText, classesFromItem });
+    taskList.push({ itemText, classesFromItem });
   }
-  localStorage.setItem('savedItens', JSON.stringify(listArray));
+  localStorage.setItem('savedItens', JSON.stringify(taskList));
 });
 
 upButton.addEventListener('click', () => {
