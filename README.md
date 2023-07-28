@@ -217,4 +217,14 @@ O que significa mover um item de uma lista para cima ou para baixo no **_DOM_**?
 </details>
 </details>
 
-OBS: É preciso clicar no botão "Salvar tarefas", ao fazer qualquer modificação, se você quiser salvar a lista atualizada no localStorage.
+## Instalação e Uso
+
+**Obs: É requerida a instalação do plugin Live Server para o VSCode**
+
+1. Faça o clone do repositório: ```git clone git@github.com:matheusfgb2/todo-list.git```
+
+2. Navegue até o diretório do projeto: ```cd todo-list```
+
+3. Abra o arquivo `index.html` no próprio VSCode e execute o plugin Live Server, clicando em "Go Live" no canto inferior direito.
+
+**OBS: É preciso clicar no botão "Salvar tarefas", ao fazer qualquer modificação, se você quiser salvar a lista atualizada no localStorage.**
